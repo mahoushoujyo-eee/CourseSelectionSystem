@@ -1,0 +1,4 @@
+Math 60 ComputerScience,Environment
+English 120 Math,Physics,Environment,ComputerScience
+Chinese 10 Environment,ComputerScience
+Physics 4 Environment,ComputerScience
