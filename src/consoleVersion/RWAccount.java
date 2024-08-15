@@ -26,13 +26,20 @@ public class RWAccount {
             RWAccount.accounts.add(temps[0]);
             RWAccount.passwords.add(temps[1]);
             RWAccount.identities.add(temps[2]);
+
+            // 用Account类的ArrayList<>
+//            new AccountBase(temps[0], temps[1], temps[2]);
         }
 
         input.close();
     }
 
-
-    //这是添加新账户信息的方法
+    /**
+     * 这是添加新账户信息的方法
+     * @param account 账号
+     * @param password
+     * @param identity
+     */
     public static void add(String account, String password, String identity)
     {
         accounts.add(account);
@@ -41,6 +48,7 @@ public class RWAccount {
     }
 
     //这是关闭读写将所有列表信息重新写到文件中的方法
+    // 也要改成用Account类的写入
     public static void close() throws FileNotFoundException {
         PrintWriter printWriter = new PrintWriter(new File(accountPath));
 
@@ -54,6 +62,10 @@ public class RWAccount {
     //这个方法是展示文件中特定账户学生的信息
     public static void showStudent(String account)//student
     {
+        Student student = new Student();
+
+        System.out.printf("%s %s %s\n", student.getUsername(), student.getStudentNumber(), student.getMajor());
+
         System.out.println(account.substring(0, account.length() - 8) + " " + account.substring(account.length() - 8) + " " + identities.get(accounts.indexOf(account)).substring(0,(identities.get(accounts.indexOf(account)).length())-7));
     }
 

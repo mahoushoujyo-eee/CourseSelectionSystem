@@ -62,7 +62,7 @@ public class AdministratorOperator {
                 case "D":
                     inquireStudent();break;
                 case "E":
-                    selectForStudent();break;
+                    selectCourseForStudent();break;
                 case "F":isContinue = false;break;
                 default:
                 System.out.println("Your input has a error!");;
@@ -214,7 +214,7 @@ public class AdministratorOperator {
         RWCourse.majors.remove(RWCourse.names.indexOf(name));
         RWCourse.capacities.remove(RWCourse.names.indexOf(name));
         RWCourse.names.remove(name);
-        RWSelectedCourse.removeSelectedData(name);
+        RWCourseSelection.removeSelectedData(name);
     }
 
     private static void updateCourse()
@@ -239,7 +239,7 @@ public class AdministratorOperator {
                 System.out.println("Your input has error!");
                 return;
             }
-            if (isOutOfSelection(name, capacity))
+            if (isOutOfCapacity(name, capacity))
                 System.out.println("The capacity now is too small for student!");
             RWCourse.capacities.set(RWCourse.names.indexOf(name), capacity);
             break;
@@ -263,8 +263,10 @@ public class AdministratorOperator {
             System.out.println("A) name    B) major  C) cancel");
 
             switch (input.nextLine()) {
-                case "A":inquireCourseName();break;
-                case "B":inquireCourseMajor();break;
+                case "A":
+                    inquireCourseByName();break;
+                case "B":
+                    inquireCourseSelectionStatByMajor();break;
                 case "C":isContinue = false;break;
                 default:
                     System.out.println("Your input is out of bound");
@@ -279,7 +281,7 @@ public class AdministratorOperator {
         String name = input.nextLine();
         System.out.print("Please input student's no: ");
         String no = input.nextLine();
-        if (isRepeated(no))
+        if (studentNumberExists(no))
         {
             System.out.println("The no you input is repeated!");
             return;
@@ -297,6 +299,7 @@ public class AdministratorOperator {
         String no = input.nextLine();
 
         boolean isDeleted = false;
+
         for (String account: RWAccount.accounts)
         {
             if (account.matches(".+" + no + "$"))
@@ -333,7 +336,7 @@ public class AdministratorOperator {
 
         if (!isFound)
         {
-            System.out.println("The no you input is not found!");
+            System.out.println("The no. you input is not found!");
         }
     }
 
@@ -345,13 +348,13 @@ public class AdministratorOperator {
         do {
             isContinue = true;
             System.out.println("Which one do you want to use to inquire:");
-            System.out.println("A) name    B) no   C) cancel");
+            System.out.println("A) name    B) no.   C) cancel");
 
             switch (input.nextLine()) {
                 case "A":
-                    inquireName();break;
+                    inquireByName();break;
                 case "B":
-                    inquireNo();break;
+                    inquireByNo();break;
                 case "C":isContinue = false;break;
                 default:
                     System.out.println("Your input is out of bound");
@@ -359,18 +362,18 @@ public class AdministratorOperator {
         }while (isContinue);
     }
 
-    private static void selectForStudent() throws FileNotFoundException {
+    private static void selectCourseForStudent() throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
 
         System.out.print("Please input student no: ");
         String no = input.nextLine();
-        if (!isRepeated(no))
+        if (!studentNumberExists(no))
         {
             System.out.println("This no is not found");
             return;
         }
 
-        String account = seekAccount(no);
+        String account = findAccountByStudentNumber(no);
         String identity = RWAccount.identities.get(RWAccount.accounts.indexOf(account));
 
 
@@ -378,14 +381,14 @@ public class AdministratorOperator {
         do {
             isContinue = true;
 
-            StudentOperator.showAllCourse(identity);
-            StudentOperator.showSelectedCourse(account);
+            StudentOperator.showAllCourses(identity);
+            StudentOperator.showSelectedCourses(account);
             System.out.println("Please choose to add or delete course: ");
             System.out.println("A) add    B) delete   C) cancel");
             switch (input.nextLine())
             {
-                case "A":StudentOperator.addCourse(account);break;
-                case "B":StudentOperator.deleteCourse(account);break;
+                case "A":StudentOperator.selectCourse(account);break;
+                case "B":StudentOperator.cancelCourseSelection(account);break;
                 case "C":isContinue = false;break;
                 default:
                     System.out.println("Your input is out of bound!");
@@ -395,7 +398,7 @@ public class AdministratorOperator {
     }
 
     //判断一个学号是否已被使用的方法看，是在创建学生方法中调用的
-    private static boolean isRepeated(String no) throws FileNotFoundException {
+    private static boolean studentNumberExists(String no) throws FileNotFoundException {
         for (String account: RWAccount.accounts)
         {
             if (account.matches(".+" + no + "$"))
@@ -405,7 +408,7 @@ public class AdministratorOperator {
     }
 
     //根据学号返回学生账户名，也就是学生姓名 + 学号
-    private static String seekAccount(String no) throws FileNotFoundException {
+    private static String findAccountByStudentNumber(String no) throws FileNotFoundException {
         for (String account: RWAccount.accounts)
         {
             if (account.matches(".+" + no + "$")) {
@@ -416,28 +419,28 @@ public class AdministratorOperator {
     }
 
     //查询这个学生姓名是否存在并展示
-    private static void inquireName()
+    private static void inquireByName()
     {
         Scanner input = new Scanner(System.in);
         System.out.print("Please input name to inquire: ");
         String name = input.nextLine();
-        boolean isFound = false;
+        boolean found = false;
         for (String nameData: RWAccount.accounts)
         {
             if (nameData.startsWith(name))
             {
                 RWAccount.showStudent(nameData);
-                isFound = true;
+                found = true;
             }
         }
-        if (!isFound)
+        if (!found)
         {
             System.out.println("The name you input is not found");
         }
     }
 
     //查询这个学号是否存在并展示
-    private static void inquireNo()
+    private static void inquireByNo()
     {
         Scanner input = new Scanner(System.in);
         System.out.print("Please input no to inquire: ");
@@ -456,7 +459,8 @@ public class AdministratorOperator {
     }
 
     //查询课程名字并展示
-    private static void inquireCourseName()
+    // 根据名称查找课程，如果查到则展示详情
+    private static void inquireCourseByName()
     {
         Scanner input = new Scanner(System.in);
         System.out.print("Please input name to inquire: ");
@@ -478,7 +482,7 @@ public class AdministratorOperator {
     }
 
     //根据专业查询选课情况
-    private static void inquireCourseMajor()
+    private static void inquireCourseSelectionStatByMajor()
     {
         Scanner input = new Scanner(System.in);
         System.out.print("Please input major to inquire: ");
@@ -511,12 +515,9 @@ public class AdministratorOperator {
     }
 
     //判断输入的新capacity是否足够容纳现在选课的人数
-    private static boolean isOutOfSelection(String courseName, String capacity)
+    private static boolean isOutOfCapacity(String courseName, String capacity)
     {
-        if (RWSelectedCourse.nowSelectionOfCourse(courseName) > Double.parseDouble(capacity))
-            return true;
-        else
-            return false;
+        return RWCourseSelection.selectedCountOfCourse(courseName) > Double.parseDouble(capacity);
     }
 
 

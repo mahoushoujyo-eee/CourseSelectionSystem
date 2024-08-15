@@ -2,14 +2,14 @@ package consoleVersion;
 
 
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
 //这个是管理注册功能的类
 public class Register {
-    private static String account, password;
+    private static String account;
+    private static String password;
     private static ArrayList<String> administratorId;
 
     public static void display() throws FileNotFoundException {
@@ -18,7 +18,7 @@ public class Register {
         do {
             System.out.print("Please input your account:");
             account = input.nextLine();
-        }while (!check() && print());
+        }while (!checkAccountExist());
         System.out.print("Input your password:");
         password = input.nextLine();
 
@@ -40,19 +40,22 @@ public class Register {
 
 
     //这里是检查注册账户是否是已存在账户
-    private static boolean check() throws FileNotFoundException {
+    private static boolean checkAccountExist() throws FileNotFoundException {
 
         //System.out.println(accounts);
         if (RWAccount.accounts.contains(account))
             return false;
         else
+        {
+            System.out.println("This account already exists");
             return true;
+        }
     }
 
     //这是一个简单的提示消息，但是因为sout貌似没有返回值，所以我另写了一个带返回值的方法在判断中组合使用
-    private static boolean print()
-    {
-        System.out.println("This account already exists");
-        return true;
-    }
+//    private static boolean print()
+//    {
+//
+//        return true;
+//    }
 }

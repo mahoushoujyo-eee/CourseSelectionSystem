@@ -6,7 +6,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class RWSelectedCourse {
+public class RWCourseSelection
+{
     public static ArrayList<String> courseNames = new ArrayList<>();
     public static ArrayList<String> studentAccounts = new ArrayList<>();
     private static String path = "data/selectedCourse.txt";
@@ -44,7 +45,7 @@ public class RWSelectedCourse {
     }
 
     //返回现在指定课程的被选数量
-    public static int nowSelectionOfCourse(String course)
+    public static int selectedCountOfCourse(String course)
     {
         if (course.equals("min"))
             return -1;
@@ -68,17 +69,19 @@ public class RWSelectedCourse {
     //删除某一条选课信息
     public static void removeSelectedData(String courseName)
     {
+        // 第一步：找到要删除的元素，或者它的下标，循环里面
+        // 第二步：循环结束后再删掉它
         ArrayList<String> tempCourse = new ArrayList<>();
-        for (int i = 0; i < RWSelectedCourse.courseNames.size(); i++) {
-            if (RWSelectedCourse.courseNames.get(i).equals(courseName))
+        for (int i = 0; i < RWCourseSelection.courseNames.size(); i++) {
+            if (RWCourseSelection.courseNames.get(i).equals(courseName))
             {
-                RWSelectedCourse.studentAccounts.remove(i);
+                RWCourseSelection.studentAccounts.remove(i);
             }
             else
             {
-                tempCourse.add(RWSelectedCourse.courseNames.get(i));
+                tempCourse.add(RWCourseSelection.courseNames.get(i));
             }
         }
-        RWSelectedCourse.courseNames = tempCourse;
+        RWCourseSelection.courseNames = tempCourse;
     }
 }

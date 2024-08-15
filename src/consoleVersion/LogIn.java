@@ -25,8 +25,10 @@ public class LogIn {
     //这个方法是监测提供的账户，密码， 身份是否跟文件内信息符合
     public static boolean inspect(boolean isRegister) throws FileNotFoundException {
 
-        if (accounts.contains(account) && RWAccount.passwords.get(accounts.indexOf(account)).equals(password) && identities.get(accounts.indexOf(account)).endsWith(identity)) {
-            identity = identities.get(accounts.indexOf(account));
+        int indexOfAccount = accounts.indexOf(account);
+
+        if (accounts.contains(account) && RWAccount.passwords.get(indexOfAccount).equals(password) && identities.get(indexOfAccount).endsWith(identity)) {
+            identity = identities.get(indexOfAccount);
             return true;
         }
         else
@@ -37,7 +39,19 @@ public class LogIn {
         }
     }
 
+    public static boolean validateUsernamePassword(String username, String password)
+    {
+        // admins
+        for (int i = 0; i < admins.length(); i++)
+        {
+            Administrator admin = admins.get(i);
 
+            if (admin.getUsername().equals(username) && admin.getPassword().equals(password))
+                return true;
+        }
+
+        return false;
+    }
 
 
     //返回当前用户是否是管理员的布尔值
@@ -50,5 +64,18 @@ public class LogIn {
     public static String getMajor()
     {
         return identity.substring(0, identity.length() - 7);
+    }
+
+    public static Administrator adminLogin()
+    {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Please input your username:");
+        String username = input.nextLine();
+        System.out.println("Please input your password:");
+        String password = input.nextLine();
+        // ...
+
+        // if username, password exists => login success
+        // else => error message.
     }
 }

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 //这是一个读写课程文件的类
@@ -33,7 +32,7 @@ public class RWCourse {
     //展示指定名称的课程信息
     public static void showCourse(String name)
     {
-        System.out.printf("%-10s%-10s%-10s  ", name, RWSelectedCourse.nowSelectionOfCourse(name), capacities.get(names.indexOf(name)));
+        System.out.printf("%-10s%-10s%-10s  ", name, RWCourseSelection.selectedCountOfCourse(name), capacities.get(names.indexOf(name)));
         String courseMajors = "";
         for (String major: majors.get(names.indexOf(name)))
         {
@@ -63,12 +62,12 @@ public class RWCourse {
 
         for (int i = 0; i < names.size(); i++)
         {
-            int max = RWSelectedCourse.nowSelectionOfCourse(temp.get(0));
+            int max = RWCourseSelection.selectedCountOfCourse(temp.get(0));
             int maxIndex = 0;
             for (int j = 0; j < temp.size();j++)
             {
-                if (RWSelectedCourse.nowSelectionOfCourse(temp.get(j)) >= max) {
-                    max = RWSelectedCourse.nowSelectionOfCourse(temp.get(j));
+                if (RWCourseSelection.selectedCountOfCourse(temp.get(j)) >= max) {
+                    max = RWCourseSelection.selectedCountOfCourse(temp.get(j));
                     maxIndex = j;
                 }
             }
