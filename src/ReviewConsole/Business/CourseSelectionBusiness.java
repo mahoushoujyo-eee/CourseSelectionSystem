@@ -2,6 +2,7 @@ package ReviewConsole.Business;
 
 import ReviewConsole.Data.Course;
 import ReviewConsole.Data.CourseSelection;
+import ReviewConsole.Data.Student;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -86,6 +87,35 @@ public class CourseSelectionBusiness
         }
         if (index != -1)
             courseSelections.remove(index);
+    }
+
+    public static ArrayList<Course> sortBySelectedStudent(ArrayList<Course> courses)
+    {
+        for (int i = 0; i < courses.size() - 1; i++)
+        {
+            int maxIndex = i;
+            for (int j = i + 1; j < courses.size(); j++)
+            {
+                if (Integer.parseInt(courses.get(maxIndex).getCapacity()) < Integer.parseInt(courses.get(j).getCapacity()))
+                    maxIndex = j;
+            }
+            Course temp = courses.get(i);
+            courses.set(i, courses.get(maxIndex));
+            courses.set(maxIndex, temp);
+        }
+        return courses;
+    }
+
+    public static ArrayList<Student> getStudentsOfCourse(String courseName)
+    {
+        ArrayList<Student> students = new ArrayList<>();
+
+        for (CourseSelection courseSelection: courseSelections)
+        {
+            if (courseSelection.getCourseName().equals(courseName))
+                students.add(StudentBusiness.getStudentByNumber(courseSelection.getStudentNumber()));
+        }
+        return students;
     }
 
     public static void initialize() throws FileNotFoundException

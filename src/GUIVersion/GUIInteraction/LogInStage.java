@@ -1,4 +1,4 @@
-package firstVersion;
+package GUIVersion.GUIInteraction;
 
 import javafx.stage.Stage;
 

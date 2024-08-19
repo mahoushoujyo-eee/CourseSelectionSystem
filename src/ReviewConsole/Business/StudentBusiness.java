@@ -6,6 +6,7 @@ import ReviewConsole.Data.Student;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.rmi.StubNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -128,15 +129,12 @@ public class StudentBusiness {
         return students;
     }
 
-    public static ArrayList<Student> getStudentByNumber(String number)
+    public static Student getStudentByNumber(String number)
     {
-        ArrayList<Student> students = new ArrayList<>();
         for (Student student: StudentBusiness.students)
-        {
             if (student.getNumber().equals(number))
-                students.add(student);
-        }
-        return students;
+                return student;
+        return null;
     }
 
     public static ArrayList<Student> getStudentByNumberApproximately(String roughNumber)

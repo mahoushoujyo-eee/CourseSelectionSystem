@@ -7,6 +7,7 @@ import ReviewConsole.Data.Student;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
 
 
 public class AdministratorOperation {
@@ -224,6 +225,7 @@ public class AdministratorOperation {
                     break;
                 case "B":
                     inquireSelectionByName();
+                    break;
                 case "C":
                     isContinue =false;
                     break;
@@ -531,7 +533,7 @@ public class AdministratorOperation {
             System.out.println("This course is not existed");
             return;
         }
-        showCourseSelection(CourseBusiness.getCourseByCourseNameApproximately(courseName));
+        showInquiredSelectedCourseData(CourseBusiness.getCourseByCourseNameApproximately(courseName));
     }
 
     private static void inquireSelectionByMajor()
@@ -543,13 +545,13 @@ public class AdministratorOperation {
             System.out.println("This major is not existed");
             return;
         }
-        showCourses(CourseCompatibilityBusiness.getCoursesOfMajorApproximately(major));
+        showInquiredSelectedCourseData(CourseCompatibilityBusiness.getCoursesOfMajorApproximately(major));
     }
 
     private static void showCourses(ArrayList<Course> courses)
     {
         System.out.printf("%-15s%-15s%-15s\n", "name", "capacity", "majors");
-        for (Course course: courses)
+        for (Course course: CourseSelectionBusiness.sortBySelectedStudent(courses))
         {
             System.out.printf("%-15s%-15s", course.getName(), course.getCapacity());
             for (String major: CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))
@@ -585,7 +587,7 @@ public class AdministratorOperation {
     private static void showCourseSelection(ArrayList<Course> courses)
     {
         System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "selection", "capacity", "majors");
-        for (Course course: courses)
+        for (Course course: CourseSelectionBusiness.sortBySelectedStudent(courses))
         {
             System.out.printf("%-15s%-15d%-15s", course.getName(), CourseSelectionBusiness.getStudentCountsOfCourse(course.getName()), course.getCapacity());
             for (String major : CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))
@@ -607,5 +609,27 @@ public class AdministratorOperation {
                 System.out.println();
             }
         }
+    }
+
+    private static void showInquiredSelectedCourseData(ArrayList<Course> courses)
+    {
+        //System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "selection", "capacity", "majors");
+
+        for(Course course: courses)
+        {
+            showCourseSelection(course.getName());
+            showStudentOfCourse(course.getName());
+        }
+    }
+
+    private static void showStudentOfCourse(String courseName)
+    {
+        ArrayList<Student> students = CourseSelectionBusiness.getStudentsOfCourse(courseName);
+        System.out.print("Student of Course:");
+        for (Student student: students)
+        {
+            System.out.print(student.getNumber() + student.getName());
+        }
+        System.out.println();
     }
 }
