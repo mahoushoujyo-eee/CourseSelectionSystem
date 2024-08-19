@@ -4,7 +4,7 @@ public class CourseSelection {
     private String courseName;
     private String studentNumber;
 
-    public CourseSelection(String studentNumber, String courseName) {
+    public CourseSelection(String courseName, String studentNumber) {
         this.studentNumber = studentNumber;
         this.courseName = courseName;
     }

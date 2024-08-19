@@ -1,6 +1,4 @@
-package consoleVersion;
-
-import javafx.application.Application;
+package ConsoleVersion;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

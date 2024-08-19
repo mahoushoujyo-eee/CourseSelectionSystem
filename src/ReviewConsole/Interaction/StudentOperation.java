@@ -107,6 +107,11 @@ public class StudentOperation {
             System.out.println("This course is not existed");
             return;
         }
+        if (!CourseSelectionBusiness.judgeCapacityEnough(courseName, CourseSelectionBusiness.getStudentCountsOfCourse(courseName) + ""))
+        {
+            System.out.println("The course is full");
+            return;
+        }
         CourseSelectionBusiness.addCourseSelection(courseName, studentNumber);
     }
 
@@ -143,7 +148,7 @@ public class StudentOperation {
         {
             System.out.printf("%-15s%-15d%-15s", course.getName(), CourseSelectionBusiness.getStudentCountsOfCourse(course.getName()), course.getCapacity());
             for (String major : CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))
-                System.out.print(major);
+                System.out.print(major + " ");
             System.out.println();
         }
     }
@@ -156,7 +161,7 @@ public class StudentOperation {
         {
             System.out.printf("%-15s%-15d%-15s", course.getName(), CourseSelectionBusiness.getStudentCountsOfCourse(course.getName()), course.getCapacity());
             for (String major : CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))
-                System.out.print(major);
+                System.out.print(major + " ");
             System.out.println();
         }
     }

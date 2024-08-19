@@ -1,10 +1,9 @@
-package consoleVersion;
+package ConsoleVersion;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import static consoleVersion.RWAccount.*;
+import static ConsoleVersion.RWAccount.*;
 
 //这个是保存登录信息，为其他类返回登录信息的类
 public class LogIn {

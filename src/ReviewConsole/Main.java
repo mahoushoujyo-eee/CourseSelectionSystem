@@ -1,9 +1,6 @@
 package ReviewConsole;
 
 import ReviewConsole.Business.*;
-import ReviewConsole.Data.Course;
-import ReviewConsole.Data.CourseCompatibility;
-import ReviewConsole.Data.CourseSelection;
 import ReviewConsole.Interaction.Start;
 
 import java.io.FileNotFoundException;

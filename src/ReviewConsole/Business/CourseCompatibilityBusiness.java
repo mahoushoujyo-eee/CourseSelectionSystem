@@ -22,6 +22,21 @@ public class CourseCompatibilityBusiness
         courseCompatibilities.add(new CourseCompatibility(courseName, major));
     }
 
+    public static void clearCourseCompatibility(String courseName)
+    {
+        ArrayList<Integer> indexes = new ArrayList<>();
+
+        for (CourseCompatibility courseCompatibility: courseCompatibilities)
+            if (courseCompatibility != null)
+                if (courseCompatibility.getCourseName().equals(courseName))
+                    indexes.add(courseCompatibilities.indexOf(courseCompatibility));
+
+        for (Integer index: indexes)
+        {
+            courseCompatibilities.set(index, null);
+        }
+    }
+
     public static void addCourseCompatibilities(String courseName, String[] majors)
     {
         for (String major: majors)
@@ -39,8 +54,9 @@ public class CourseCompatibilityBusiness
         ArrayList<String> majors = new ArrayList<>();
         for (CourseCompatibility courseCompatibility: courseCompatibilities)
         {
-            if (courseCompatibility.getCourseName().equals(courseName))
-                majors.add(courseCompatibility.getMajor());
+            if (courseCompatibility != null)
+                if (courseCompatibility.getCourseName().equals(courseName))
+                    majors.add(courseCompatibility.getMajor());
         }
 
         return majors;
@@ -108,7 +124,8 @@ public class CourseCompatibilityBusiness
 
         for (CourseCompatibility courseCompatibility: courseCompatibilities)
         {
-            printWriter.println(courseCompatibility.getCourseName() + " " + courseCompatibility.getMajor());
+            if (courseCompatibility != null)
+                printWriter.println(courseCompatibility.getCourseName() + " " + courseCompatibility.getMajor());
         }
         printWriter.close();
     }

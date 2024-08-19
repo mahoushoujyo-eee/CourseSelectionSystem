@@ -1,2 +1,7 @@
-Math ComputerScience
 Java ComputerScience
+Math ComputerScience
+Math Math
+Chinese Chinese
+Chinese Environment
+English English
+English ComputerScience

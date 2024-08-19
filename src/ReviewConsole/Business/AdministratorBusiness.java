@@ -21,6 +21,16 @@ public class AdministratorBusiness
         return false;
     }
 
+    public static boolean judgeAccountLegal(String account)
+    {
+        if (account.contains(" "))
+            return false;
+        else if (account.isEmpty())
+            return false;
+        else
+            return true;
+    }
+
     public static boolean judgePasswordLegal(String password)
     {
         if (password.contains(" "))
@@ -65,7 +75,8 @@ public class AdministratorBusiness
 
         for (Administrator administrator: administrators)
         {
-            printWriter.println(administrator.getAccount() + " " + administrator.getPassword());
+            if (administrator != null)
+                printWriter.println(administrator.getAccount() + " " + administrator.getPassword());
         }
 
         printWriter.close();

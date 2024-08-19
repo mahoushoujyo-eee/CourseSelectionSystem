@@ -1,4 +1,4 @@
-package consoleVersion;
+package ConsoleVersion;
 
 public abstract class AccountBase
 {

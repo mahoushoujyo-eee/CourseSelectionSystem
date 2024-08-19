@@ -1,4 +1,4 @@
-package consoleVersion;
+package ConsoleVersion;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
