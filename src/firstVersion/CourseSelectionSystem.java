@@ -9,12 +9,7 @@ public class CourseSelectionSystem extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Button btOK = new Button();
-        ErrorPane errorPane = new ErrorPane("This is a testing" ,btOK);
-        btOK.setOnAction(event -> primaryStage.close());
-
-        primaryStage.setScene(new Scene(errorPane));
-        primaryStage.setTitle("Test");
-        primaryStage.show();
+        ErrorStage errorStage = new ErrorStage("There is a test");
+        errorStage.show();
     }
 }

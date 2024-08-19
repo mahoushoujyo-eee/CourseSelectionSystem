@@ -39,19 +39,19 @@ public class LogIn {
         }
     }
 
-    public static boolean validateUsernamePassword(String username, String password)
+    /*public static boolean validateUsernamePassword(String username, String password)
     {
         // admins
-        for (int i = 0; i < admins.length(); i++)
+        for (int i = 0; i < accounts.size(); i++)
         {
-            Administrator admin = admins.get(i);
+            //Administrator admin = accounts.get(i);
 
             if (admin.getUsername().equals(username) && admin.getPassword().equals(password))
                 return true;
         }
 
         return false;
-    }
+    }*/
 
 
     //返回当前用户是否是管理员的布尔值
@@ -66,7 +66,7 @@ public class LogIn {
         return identity.substring(0, identity.length() - 7);
     }
 
-    public static Administrator adminLogin()
+   /* public static Administrator adminLogin()
     {
         Scanner input = new Scanner(System.in);
         System.out.println("Please input your username:");
@@ -77,5 +77,5 @@ public class LogIn {
 
         // if username, password exists => login success
         // else => error message.
-    }
+    }*/
 }
