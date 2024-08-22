@@ -7,6 +7,7 @@ import ReviewConsole.Data.Student;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
 
 
 public class AdministratorOperation {
@@ -177,7 +178,7 @@ public class AdministratorOperation {
         boolean isContinue;
         do
         {
-            showCourses(CourseBusiness.courses);
+            showCourseSelection(CourseBusiness.courses);
             isContinue = true;
             System.out.println("Please choose to continue");
             System.out.println("A) add      B) delete");
@@ -214,7 +215,7 @@ public class AdministratorOperation {
         do
         {
             isContinue = true;
-            showCourseSelection(CourseBusiness.courses);
+            showCourseSelection(CourseSelectionBusiness.sortBySelectedStudent(CourseBusiness.courses));
             System.out.println("Please choose to continue");
             System.out.println("A) major   B) name    C) cancel");
             switch (input.nextLine())
@@ -224,6 +225,7 @@ public class AdministratorOperation {
                     break;
                 case "B":
                     inquireSelectionByName();
+                    break;
                 case "C":
                     isContinue =false;
                     break;
@@ -285,10 +287,7 @@ public class AdministratorOperation {
             case "A":
                 System.out.print("Please input student's name:");
                 String name = input.nextLine();
-                if (StudentBusiness.judgeStudentNameExist(name))
-                    StudentBusiness.updateStudentName(number, name);
-                else
-                    System.out.println("This name is not existed");
+                StudentBusiness.updateStudentName(number, name);
                 break;
             case "B":
                 System.out.print("Please input student's major:");
@@ -468,6 +467,7 @@ public class AdministratorOperation {
         }
         else if (!CourseSelectionBusiness.judgeCapacityEnough(courseName , capacity))
         {
+            System.out.println("Update Failure");
             System.out.println("Your course capacity is not enough");
         }
         else
@@ -492,9 +492,10 @@ public class AdministratorOperation {
         }
         if (isContinue)
         {
+            CourseCompatibilityBusiness.clearCourseCompatibility(courseName);
             for (String major : majors)
                 CourseCompatibilityBusiness.addCourseCompatibility(courseName, major);
-            System.out.println("Add Successfully");
+            System.out.println("Update Successfully");
         }
     }
 
@@ -531,7 +532,7 @@ public class AdministratorOperation {
             System.out.println("This course is not existed");
             return;
         }
-        showCourseSelection(CourseBusiness.getCourseByCourseNameApproximately(courseName));
+        showInquiredSelectedCourseData(CourseSelectionBusiness.sortBySelectedStudent(CourseBusiness.getCourseByCourseNameApproximately(courseName)));
     }
 
     private static void inquireSelectionByMajor()
@@ -543,17 +544,17 @@ public class AdministratorOperation {
             System.out.println("This major is not existed");
             return;
         }
-        showCourses(CourseCompatibilityBusiness.getCoursesOfMajorApproximately(major));
+        showInquiredSelectedCourseData(CourseSelectionBusiness.sortBySelectedStudent(CourseCompatibilityBusiness.getCoursesOfMajorApproximately(major)));
     }
 
     private static void showCourses(ArrayList<Course> courses)
     {
         System.out.printf("%-15s%-15s%-15s\n", "name", "capacity", "majors");
-        for (Course course: courses)
+        for (Course course: CourseSelectionBusiness.sortBySelectedStudent(courses))
         {
             System.out.printf("%-15s%-15s", course.getName(), course.getCapacity());
             for (String major: CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))
-                System.out.print(major);
+                System.out.print(major + " ");
             System.out.println();
         }
     }
@@ -585,11 +586,11 @@ public class AdministratorOperation {
     private static void showCourseSelection(ArrayList<Course> courses)
     {
         System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "selection", "capacity", "majors");
-        for (Course course: courses)
+        for (Course course: CourseSelectionBusiness.sortBySelectedStudent(courses))
         {
             System.out.printf("%-15s%-15d%-15s", course.getName(), CourseSelectionBusiness.getStudentCountsOfCourse(course.getName()), course.getCapacity());
             for (String major : CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))
-                    System.out.print(major);
+                    System.out.print(major + " ");
                 System.out.println();
         }
     }
@@ -603,9 +604,32 @@ public class AdministratorOperation {
             {
                 System.out.printf("%-15s%-15d%-15s", course.getName(), CourseSelectionBusiness.getStudentCountsOfCourse(course.getName()), course.getCapacity());
                 for (String major : CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))
-                    System.out.print(major);
+                    System.out.print(major + " ");
                 System.out.println();
             }
         }
+    }
+
+    private static void showInquiredSelectedCourseData(ArrayList<Course> courses)
+    {
+        //System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "selection", "capacity", "majors");
+
+        for(Course course: courses)
+        {
+            showCourseSelection(course.getName());
+            showStudentOfCourse(course.getName());
+        }
+        System.out.println();
+    }
+
+    private static void showStudentOfCourse(String courseName)
+    {
+        ArrayList<Student> students = CourseSelectionBusiness.getStudentsOfCourse(courseName);
+        System.out.print("Student of Course:");
+        for (Student student: students)
+        {
+            System.out.print(student.getNumber() + student.getName() + " ");
+        }
+        System.out.println();
     }
 }

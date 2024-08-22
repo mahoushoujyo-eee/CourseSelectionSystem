@@ -148,7 +148,7 @@ public class StudentOperation {
         {
             System.out.printf("%-15s%-15d%-15s", course.getName(), CourseSelectionBusiness.getStudentCountsOfCourse(course.getName()), course.getCapacity());
             for (String major : CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))
-                System.out.print(major + " ");
+                System.out.print(major);
             System.out.println();
         }
     }
