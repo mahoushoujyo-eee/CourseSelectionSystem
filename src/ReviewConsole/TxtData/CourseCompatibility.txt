@@ -5,3 +5,5 @@ Chinese Chinese
 Chinese Environment
 English English
 English ComputerScience
+Python ComputerScience
+Python Environment

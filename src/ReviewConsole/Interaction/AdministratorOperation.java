@@ -585,7 +585,7 @@ public class AdministratorOperation {
 
     private static void showCourseSelection(ArrayList<Course> courses)
     {
-        System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "selection", "capacity", "majors");
+        System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "#selected", "capacity", "majors");
         for (Course course: CourseSelectionBusiness.sortBySelectedStudent(courses))
         {
             System.out.printf("%-15s%-15d%-15s", course.getName(), CourseSelectionBusiness.getStudentCountsOfCourse(course.getName()), course.getCapacity());
@@ -597,7 +597,7 @@ public class AdministratorOperation {
 
     private static void showCourseSelection(String courseName)
     {
-        System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "selection", "capacity", "majors");
+        System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "#selected", "capacity", "majors");
         for (Course course: CourseBusiness.courses)
         {
             if (course.getName().equals(courseName))

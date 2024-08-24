@@ -143,12 +143,12 @@ public class StudentOperation {
     public static void showAllCourseSelection(String studentNumber)
     {
         System.out.println("There are courses you can select");
-        System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "selection", "capacity", "majors");
-        for (Course course: CourseCompatibilityBusiness.getCoursesOfMajor(StudentBusiness.inquireStudentByNumber(studentNumber).getMajor()))
+        System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "#selected", "capacity", "majors");
+        for (Course course: CourseSelectionBusiness.sortBySelectedStudent(CourseCompatibilityBusiness.getCoursesOfMajor(StudentBusiness.inquireStudentByNumber(studentNumber).getMajor())))
         {
             System.out.printf("%-15s%-15d%-15s", course.getName(), CourseSelectionBusiness.getStudentCountsOfCourse(course.getName()), course.getCapacity());
             for (String major : CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))
-                System.out.print(major);
+                System.out.print(major + " ");
             System.out.println();
         }
     }
@@ -156,8 +156,8 @@ public class StudentOperation {
     public static void showCourseSelectionWithStudent(String studentNumber)
     {
         System.out.println("There are courses you have selected");
-        System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "selection", "capacity", "majors");
-        for (Course course: CourseSelectionBusiness.getSelectedCourseOfStudent(studentNumber))
+        System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "#selected", "capacity", "majors");
+        for (Course course: CourseSelectionBusiness.sortBySelectedStudent(CourseSelectionBusiness.getSelectedCourseOfStudent(studentNumber)))
         {
             System.out.printf("%-15s%-15d%-15s", course.getName(), CourseSelectionBusiness.getStudentCountsOfCourse(course.getName()), course.getCapacity());
             for (String major : CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))

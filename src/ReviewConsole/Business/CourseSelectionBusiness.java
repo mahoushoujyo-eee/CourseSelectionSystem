@@ -96,7 +96,7 @@ public class CourseSelectionBusiness
             int maxIndex = i;
             for (int j = i + 1; j < courses.size(); j++)
             {
-                if (Integer.parseInt(courses.get(maxIndex).getCapacity()) < Integer.parseInt(courses.get(j).getCapacity()))
+                if (getStudentCountsOfCourse(courses.get(maxIndex).getName()) < getStudentCountsOfCourse(courses.get(j).getName()))
                     maxIndex = j;
             }
             Course temp = courses.get(i);
