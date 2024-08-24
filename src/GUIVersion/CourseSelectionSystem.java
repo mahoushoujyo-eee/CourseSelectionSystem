@@ -64,7 +64,7 @@ public class CourseSelectionSystem extends Application
         });
         btAdministratorLogIn.setOnAction(event ->
         {
-            if (!AdministratorBusiness.judgeAccountAndPasswordMatch(new Administrator(administratorLogInStage.getLogInAccount(), administratorLogInStage.getLogInPassword())))
+            if (!AdministratorBusiness.accountAndPasswordMatch(new Administrator(administratorLogInStage.getLogInAccount(), administratorLogInStage.getLogInPassword())))
             {
                 new ErrorStage("Your account don't match your password").show();
             }
@@ -76,11 +76,11 @@ public class CourseSelectionSystem extends Application
         });
         btAdministratorRegister.setOnAction(event ->
         {
-            if (AdministratorBusiness.judgeAccountExist(new Administrator(administratorRegisterStage.getRegisterAccount(), administratorRegisterStage.getRegisterPassword())))
+            if (AdministratorBusiness.accountExist(administratorRegisterStage.getRegisterAccount()))
                 new ErrorStage("Your input account is already existed").show();
-            else if (!AdministratorBusiness.judgeAccountLegal(administratorRegisterStage.getRegisterAccount()))
+            else if (!AdministratorBusiness.accountLegal(administratorRegisterStage.getRegisterAccount()))
                 new ErrorStage("Your account is illegal").show();
-            else if (!AdministratorBusiness.judgePasswordLegal(administratorRegisterStage.getRegisterPassword()))
+            else if (!AdministratorBusiness.passwordLegal(administratorRegisterStage.getRegisterPassword()))
                 new ErrorStage("Your password is illegal").show();
             else
             {

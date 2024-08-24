@@ -1,7 +1,5 @@
 package ReviewConsole.Interaction;
 
-import ReviewConsole.Business.AdministratorBusiness;
-
 import java.util.Scanner;
 
 public class Start
@@ -19,10 +17,10 @@ public class Start
             switch (input.nextLine())
             {
                 case "A":
-                    AdministratorOperation.judgeLogInOrRegister();
+                    AdministratorOperation.chooseLogInOrRegister();
                     break;
                 case "B":
-                    StudentOperation.judgeLogInOrRegister();
+                    StudentOperation.chooseLogInOrRegister();
                     break;
                 case "C":
                     isContinue = false;

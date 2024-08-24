@@ -10,9 +10,9 @@ import java.util.Scanner;
 
 public class CourseBusiness {
     public static ArrayList<Course> courses = new ArrayList<>();
-    private static String path = "src/ReviewConsole/TxtData/Course.txt";
+    private static final String path = "src/ReviewConsole/TxtData/Course.txt";
 
-    public static boolean judgeCourseNameExist(String name)
+    public static boolean courseNameExist(String name)
     {
         for (Course course: courses)
         {
@@ -22,7 +22,7 @@ public class CourseBusiness {
         return false;
     }
 
-    public static boolean judgeCourseNameExistApproximately(String roughName)
+    public static boolean courseNameExistApproximately(String roughName)
     {
         for (Course course: courses)
         {
@@ -32,7 +32,7 @@ public class CourseBusiness {
         return false;
     }
 
-    public static boolean judgeCourseCapacityRight(String capacity)
+    public static boolean courseCapacityRight(String capacity)
     {
         try
         {

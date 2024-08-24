@@ -10,18 +10,18 @@ import java.util.Scanner;
 
 public class AdministratorBusiness
 {
-    private static String path = "src/ReviewConsole/TxtData/Administrator.txt";
+    private static final String path = "src/ReviewConsole/TxtData/Administrator.txt";
     private static ArrayList<Administrator> administrators = new ArrayList<>();
 
-    public static boolean judgeAccountExist(Administrator administrator)
+    public static boolean accountExist(String account)
     {
         for (Administrator administratorData: administrators)
-            if (administratorData.getAccount().equals(administrator.getAccount()))
+            if (administratorData.getAccount().equals(account))
                 return true;
         return false;
     }
 
-    public static boolean judgeAccountLegal(String account)
+    public static boolean accountLegal(String account)
     {
         if (account.contains(" "))
             return false;
@@ -31,7 +31,7 @@ public class AdministratorBusiness
             return true;
     }
 
-    public static boolean judgePasswordLegal(String password)
+    public static boolean passwordLegal(String password)
     {
         if (password.contains(" "))
             return false;
@@ -45,7 +45,7 @@ public class AdministratorBusiness
         administrators.add(administrator);
     }
 
-    public static boolean judgeAccountAndPasswordMatch(Administrator administrator)
+    public static boolean accountAndPasswordMatch(Administrator administrator)
     {
         for (Administrator administratorData: administrators)
             if (administratorData.getAccount().equals(administrator.getAccount()) &&

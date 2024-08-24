@@ -11,9 +11,9 @@ import java.util.Scanner;
 public class MajorBusiness
 {
     public static ArrayList<Major> majors = new ArrayList<Major>();
-    private static String path = "src/ReviewConsole/TxtData/Major.txt";
+    private static final String path = "src/ReviewConsole/TxtData/Major.txt";
 
-    public static boolean judgeMajorExist(String majorData)
+    public static boolean majorExist(String majorData)
     {
         for (Major major: majors)
             if (major.getMajor().equals(majorData))
@@ -22,7 +22,7 @@ public class MajorBusiness
         return false;
     }
 
-    public static boolean judgeMajorExistApproximately(String majorData)
+    public static boolean majorExistApproximately(String majorData)
     {
         for (Major major: majors)
             if (major.getMajor().contains(majorData))
@@ -32,18 +32,18 @@ public class MajorBusiness
     }
 
 
-    public static boolean judgeMajorsExist(String[] majors)
+    public static boolean majorsExist(String[] majors)
     {
         for (String major: majors)
-            if (!judgeMajorExist(major))
+            if (!majorExist(major))
                 return false;
         return true;
     }
 
-    public static boolean judgeMajorsExist(ArrayList<String> majors)
+    public static boolean majorsExist(ArrayList<String> majors)
     {
         for (String major: majors)
-            if (!judgeMajorExist(major))
+            if (!majorExist(major))
                 return false;
         return true;
     }

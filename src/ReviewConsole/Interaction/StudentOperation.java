@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class StudentOperation {
     private static Scanner input = new Scanner(System.in);
 
-    public static void judgeLogInOrRegister()
+    public static void chooseLogInOrRegister()
     {
         boolean isContinue;
         do
@@ -43,11 +43,11 @@ public class StudentOperation {
             String number = input.nextLine();
             System.out.print("Please input your password:");
             String password = input.nextLine();
-            if (!StudentBusiness.judgeStudentNumberExist(number))
+            if (!StudentBusiness.studentNumberExist(number))
             {
                 System.out.println("This student number is not exist");
             }
-            else if (StudentBusiness.judgeStudentNumberMatchPassword(number, password))
+            else if (StudentBusiness.studentNumberMatchPassword(number, password))
             {
                 System.out.println("Log in Successfully");
                 studentOperate(number);
@@ -55,7 +55,7 @@ public class StudentOperation {
             }
             else
             {
-                System.out.println("Your account don't match your password");
+                System.out.println("Your account doesn't match your password");
             }
         }while (true);
     }
@@ -70,7 +70,7 @@ public class StudentOperation {
         do
         {
             showAllCourseSelection(number);
-            showCourseSelectionWithStudent(number);
+            showCourseSelectionOfStudent(number);
             System.out.println("Please choose one to continue:");
             System.out.println("A) select course");
             System.out.println("B) withdraw course");
@@ -84,7 +84,7 @@ public class StudentOperation {
                     studentSelectCourse(number);
                     break;
                 case "B":
-                    studentWithdrawCourse(number);
+                    studentWithdrawCourseSelection(number);
                     break;
                 case "C":
                     changePassword(number);
@@ -102,12 +102,12 @@ public class StudentOperation {
     {
         System.out.print("Please input the course your want to select:");
         String courseName = input.nextLine();
-        if (!CourseBusiness.judgeCourseNameExist(courseName))
+        if (!CourseBusiness.courseNameExist(courseName))
         {
             System.out.println("This course is not existed");
             return;
         }
-        if (!CourseSelectionBusiness.judgeCapacityEnough(courseName, CourseSelectionBusiness.getStudentCountsOfCourse(courseName) + ""))
+        if (!CourseSelectionBusiness.capacityEnough(courseName, CourseSelectionBusiness.getStudentCountsOfCourse(courseName) + ""))
         {
             System.out.println("The course is full");
             return;
@@ -115,16 +115,16 @@ public class StudentOperation {
         CourseSelectionBusiness.addCourseSelection(courseName, studentNumber);
     }
 
-    public static void studentWithdrawCourse(String studentNumber)
+    public static void studentWithdrawCourseSelection(String studentNumber)
     {
         System.out.print("Please input the course you want to withdraw:");
         String courseName = input.nextLine();
-        if (!CourseBusiness.judgeCourseNameExist(courseName))
+        if (!CourseBusiness.courseNameExist(courseName))
         {
             System.out.println("This course is not existed");
             return;
         }
-        else if (!CourseSelectionBusiness.judgeCourseSelectionExist(courseName, studentNumber))
+        else if (!CourseSelectionBusiness.courseSelectionExist(courseName, studentNumber))
         {
             System.out.println("You have not select this course");
             return;
@@ -144,7 +144,7 @@ public class StudentOperation {
     {
         System.out.println("There are courses you can select");
         System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "#selected", "capacity", "majors");
-        for (Course course: CourseSelectionBusiness.sortBySelectedStudent(CourseCompatibilityBusiness.getCoursesOfMajor(StudentBusiness.inquireStudentByNumber(studentNumber).getMajor())))
+        for (Course course: CourseSelectionBusiness.sortBySelectedCount(CourseCompatibilityBusiness.getCoursesOfMajor(StudentBusiness.findStudentByNumber(studentNumber).getMajor())))
         {
             System.out.printf("%-15s%-15d%-15s", course.getName(), CourseSelectionBusiness.getStudentCountsOfCourse(course.getName()), course.getCapacity());
             for (String major : CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))
@@ -153,11 +153,11 @@ public class StudentOperation {
         }
     }
 
-    public static void showCourseSelectionWithStudent(String studentNumber)
+    public static void showCourseSelectionOfStudent(String studentNumber)
     {
         System.out.println("There are courses you have selected");
         System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "#selected", "capacity", "majors");
-        for (Course course: CourseSelectionBusiness.sortBySelectedStudent(CourseSelectionBusiness.getSelectedCourseOfStudent(studentNumber)))
+        for (Course course: CourseSelectionBusiness.sortBySelectedCount(CourseSelectionBusiness.getSelectedCourseOfStudent(studentNumber)))
         {
             System.out.printf("%-15s%-15d%-15s", course.getName(), CourseSelectionBusiness.getStudentCountsOfCourse(course.getName()), course.getCapacity());
             for (String major : CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))

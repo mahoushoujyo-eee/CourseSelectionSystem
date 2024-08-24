@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class CourseSelectionBusiness
 {
     public static ArrayList<CourseSelection> courseSelections = new ArrayList<>();
-    private static String path = "src/ReviewConsole/TxtData/CourseSelection.txt";
+    private static final String path = "src/ReviewConsole/TxtData/CourseSelection.txt";
 
 
     public static int getStudentCountsOfCourse(String courseName)
@@ -53,7 +53,7 @@ public class CourseSelectionBusiness
         return courses;
     }
 
-    public static boolean judgeCapacityEnough(String courseName, String capacity)
+    public static boolean capacityEnough(String courseName, String capacity)
     {
         return Integer.parseInt(capacity) >= getStudentCountsOfCourse(courseName);
     }
@@ -63,7 +63,7 @@ public class CourseSelectionBusiness
         courseSelections.add(new CourseSelection(courseName, studentNumber));
     }
 
-    public static boolean judgeCourseSelectionExist(String courseName, String studentNumber)
+    public static boolean courseSelectionExist(String courseName, String studentNumber)
     {
         for (CourseSelection courseSelection: courseSelections)
         {
@@ -75,21 +75,21 @@ public class CourseSelectionBusiness
 
     public static void removeCourseSelection(String courseName, String studentNumber)
     {
-        int index = -1;
+        CourseSelection tempCourseSelection = null;
 
         for (CourseSelection courseSelection: courseSelections)
         {
             if (courseSelection.getCourseName().equals(courseName) && courseSelection.getStudentNumber().equals(studentNumber))
             {
-                index = courseSelections.indexOf(courseSelection);
+                tempCourseSelection = courseSelection;
                 break;
             }
         }
-        if (index != -1)
-            courseSelections.remove(index);
+        if (tempCourseSelection != null)
+            courseSelections.remove(tempCourseSelection);
     }
 
-    public static ArrayList<Course> sortBySelectedStudent(ArrayList<Course> courses)
+    public static ArrayList<Course> sortBySelectedCount(ArrayList<Course> courses)
     {
         for (int i = 0; i < courses.size() - 1; i++)
         {

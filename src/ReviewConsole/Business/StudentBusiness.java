@@ -6,16 +6,15 @@ import ReviewConsole.Data.Student;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.rmi.StubNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StudentBusiness {
     public static ArrayList<Student> students = new ArrayList<>();
 
-    private static String path = "src/ReviewConsole/TxtData/Student.txt";
+    private static final String path = "src/ReviewConsole/TxtData/Student.txt";
 
-    public static boolean judgeStudentNumberExist(String number)
+    public static boolean studentNumberExist(String number)
     {
         for (Student student: students)
         {
@@ -25,7 +24,7 @@ public class StudentBusiness {
         return false;
     }
 
-    public static boolean judgeStudentNumberExistApproximately(String roughNumber)
+    public static boolean studentNumberExistApproximately(String roughNumber)
     {
         for (Student student: students)
         {
@@ -35,7 +34,7 @@ public class StudentBusiness {
         return false;
     }
 
-    public static boolean judgeStudentNumberMatchPassword(String number, String password)
+    public static boolean studentNumberMatchPassword(String number, String password)
     {
         for (Student student: students)
         {
@@ -45,7 +44,7 @@ public class StudentBusiness {
         return false;
     }
 
-    public static Student inquireStudentByNumber(String number)
+    public static Student findStudentByNumber(String number)
     {
         for (Student student: students)
         {
@@ -71,19 +70,20 @@ public class StudentBusiness {
 
     public static void deleteStudent(String number)
     {
-        int index = -1;
+        Student tempStudent = null;
         for (Student student: students)
         {
             if (student.getNumber().equals(number))
             {
-                index = students.indexOf(student);
+                tempStudent = student;
+                break;
             }
         }
-        if (index != -1)
-            students.remove(index);
+        if (tempStudent != null)
+            students.remove(tempStudent);
     }
 
-    public static void updateStudentName(String number, String name)
+    public static void updateStudentNameByNumber(String number, String name)
     {
         for (Student student: students)
         {
@@ -95,7 +95,7 @@ public class StudentBusiness {
         }
     }
 
-    public static void updateStudentMajor(String number, String major)
+    public static void updateStudentMajorByNumber(String number, String major)
     {
         for (Student student: students)
         {
@@ -118,7 +118,7 @@ public class StudentBusiness {
         return students;
     }
 
-    public static ArrayList<Student> getStudentByNameApproximately(String roughName)
+    public static ArrayList<Student> getStudentsByNameApproximately(String roughName)
     {
         ArrayList<Student> students = new ArrayList<>();
         for (Student student: StudentBusiness.students)
@@ -137,7 +137,7 @@ public class StudentBusiness {
         return null;
     }
 
-    public static ArrayList<Student> getStudentByNumberApproximately(String roughNumber)
+    public static ArrayList<Student> getStudentsByNumberApproximately(String roughNumber)
     {
         ArrayList<Student> students = new ArrayList<>();
         for (Student student: StudentBusiness.students)
@@ -148,7 +148,7 @@ public class StudentBusiness {
         return students;
     }
 
-    public static boolean judgeStudentNameExist(String name)
+    public static boolean studentNameExist(String name)
     {
         for (Student student: students)
         {
@@ -160,7 +160,7 @@ public class StudentBusiness {
         return false;
     }
 
-    public static boolean judgeStudentNameExistApproximately(String roughName)
+    public static boolean studentNameExistApproximately(String roughName)
     {
         for (Student student: students)
         {

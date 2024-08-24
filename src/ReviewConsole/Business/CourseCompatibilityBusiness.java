@@ -7,14 +7,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class CourseCompatibilityBusiness
 {
     public static ArrayList<CourseCompatibility> courseCompatibilities = new ArrayList<>();
 
-    private static String path = "src/ReviewConsole/TxtData/CourseCompatibility.txt";
+    private static final String path = "src/ReviewConsole/TxtData/CourseCompatibility.txt";
 
 
     public static void addCourseCompatibility(String courseName, String major)
@@ -24,16 +23,20 @@ public class CourseCompatibilityBusiness
 
     public static void clearCourseCompatibility(String courseName)
     {
-        ArrayList<Integer> indexes = new ArrayList<>();
+        ArrayList<CourseCompatibility> tempCourseCompatibilities = new ArrayList<>();
 
         for (CourseCompatibility courseCompatibility: courseCompatibilities)
-            if (courseCompatibility != null)
-                if (courseCompatibility.getCourseName().equals(courseName))
-                    indexes.add(courseCompatibilities.indexOf(courseCompatibility));
-
-        for (Integer index: indexes)
         {
-            courseCompatibilities.set(index, null);
+            if (courseCompatibility != null)
+            {
+                if (courseCompatibility.getCourseName().equals(courseName))
+                    tempCourseCompatibilities.add(courseCompatibility);
+            }
+        }
+
+        for (CourseCompatibility courseCompatibility: tempCourseCompatibilities)
+        {
+            courseCompatibilities.remove(courseCompatibility);
         }
     }
 
@@ -62,12 +65,12 @@ public class CourseCompatibilityBusiness
         return majors;
     }
 
-    public static boolean judgeCourseContainsMajor(String courseName, String major)
+    public static boolean courseContainsMajor(String courseName, String major)
     {
         return getMajorsOfCourse(courseName).contains(major);
     }
 
-    public static boolean judgeCourseContainsMajorApproximately(String courseName, String roughMajor)
+    public static boolean courseContainsMajorApproximately(String courseName, String roughMajor)
     {
         for(String major:getMajorsOfCourse(courseName))
         {
@@ -85,7 +88,7 @@ public class CourseCompatibilityBusiness
 
         for (Course course: CourseBusiness.courses)
         {
-            if (CourseCompatibilityBusiness.judgeCourseContainsMajor(course.getName(), major))
+            if (CourseCompatibilityBusiness.courseContainsMajor(course.getName(), major))
                 courses.add(course);
         }
 
@@ -98,7 +101,7 @@ public class CourseCompatibilityBusiness
 
         for (Course course: CourseBusiness.courses)
         {
-            if (CourseCompatibilityBusiness.judgeCourseContainsMajorApproximately(course.getName(), roughMajor))
+            if (CourseCompatibilityBusiness.courseContainsMajorApproximately(course.getName(), roughMajor))
                 courses.add(course);
         }
 

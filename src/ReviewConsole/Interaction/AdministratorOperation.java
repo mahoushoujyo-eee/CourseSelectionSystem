@@ -7,14 +7,18 @@ import ReviewConsole.Data.Student;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.Callable;
 
 
 public class AdministratorOperation {
-    private static Scanner input = new Scanner(System.in);
+    private static Scanner input;
+
+    static
+    {
+        input = new Scanner(System.in);
+    }
 
 
-    public static void judgeLogInOrRegister()
+    public static void chooseLogInOrRegister()
     {
         boolean isContinue;
         do
@@ -50,11 +54,11 @@ public class AdministratorOperation {
             System.out.print("Please input your password:");
             String password = input.nextLine();
             Administrator administrator = new Administrator(account, password);
-            if (AdministratorBusiness.judgeAccountExist(administrator))
+            if (AdministratorBusiness.accountExist(account))
             {
                 System.out.println("This account already exist");
             }
-            else if (!AdministratorBusiness.judgePasswordLegal(password))
+            else if (!AdministratorBusiness.passwordLegal(password))
             {
                 System.out.println("Your password is illegal");
             }
@@ -79,11 +83,11 @@ public class AdministratorOperation {
             System.out.print("Please input your password:");
             String password = input.nextLine();
             Administrator administrator = new Administrator(account, password);
-            if (!AdministratorBusiness.judgeAccountExist(administrator))
+            if (!AdministratorBusiness.accountExist(account))
             {
                 System.out.println("This account is not exist");
             }
-            else if (AdministratorBusiness.judgeAccountAndPasswordMatch(administrator))
+            else if (AdministratorBusiness.accountAndPasswordMatch(administrator))
             {
                 System.out.println("Log in Successfully");
                 administratorOperate();
@@ -91,7 +95,7 @@ public class AdministratorOperation {
             }
             else
             {
-                System.out.println("Your account don't match your password");
+                System.out.println("Your account doesn't match your password");
             }
         }while (true);
     }
@@ -215,16 +219,16 @@ public class AdministratorOperation {
         do
         {
             isContinue = true;
-            showCourseSelection(CourseSelectionBusiness.sortBySelectedStudent(CourseBusiness.courses));
+            showCourseSelection(CourseSelectionBusiness.sortBySelectedCount(CourseBusiness.courses));
             System.out.println("Please choose to continue");
             System.out.println("A) major   B) name    C) cancel");
             switch (input.nextLine())
             {
                 case "A":
-                    inquireSelectionByMajor();
+                    findSelectionByMajor();
                     break;
                 case "B":
-                    inquireSelectionByName();
+                    findSelectionByName();
                     break;
                 case "C":
                     isContinue =false;
@@ -241,7 +245,7 @@ public class AdministratorOperation {
     {
         System.out.print("Please input student's number:");
         String number = input.nextLine();
-        if (StudentBusiness.judgeStudentNumberExist(number))
+        if (StudentBusiness.studentNumberExist(number))
         {
             System.out.println("This student number already exist");
             return;
@@ -250,7 +254,7 @@ public class AdministratorOperation {
         String name = input.nextLine();
         System.out.print("Please input student's major:");
         String major = input.nextLine();
-        if (!MajorBusiness.judgeMajorExist(major))
+        if (!MajorBusiness.majorExist(major))
         {
             System.out.println("This major is not existed");
             return;
@@ -263,7 +267,7 @@ public class AdministratorOperation {
     {
         System.out.print("Please input student's number:");
         String number = input.nextLine();
-        if (!StudentBusiness.judgeStudentNumberExist(number))
+        if (!StudentBusiness.studentNumberExist(number))
         {
             System.out.println("This number is not existed");
             return;
@@ -275,7 +279,7 @@ public class AdministratorOperation {
     {
         System.out.print("Please input student's number:");
         String number = input.nextLine();
-        if (!StudentBusiness.judgeStudentNumberExist(number))
+        if (!StudentBusiness.studentNumberExist(number))
         {
             System.out.println("This number is not existed");
             return;
@@ -287,13 +291,13 @@ public class AdministratorOperation {
             case "A":
                 System.out.print("Please input student's name:");
                 String name = input.nextLine();
-                StudentBusiness.updateStudentName(number, name);
+                StudentBusiness.updateStudentNameByNumber(number, name);
                 break;
             case "B":
                 System.out.print("Please input student's major:");
                 String major = input.nextLine();
-                if (MajorBusiness.judgeMajorExist(major))
-                    StudentBusiness.updateStudentMajor(number, major);
+                if (MajorBusiness.majorExist(major))
+                    StudentBusiness.updateStudentMajorByNumber(number, major);
                 else
                     System.out.println("This major is not existed");
                 break;
@@ -313,16 +317,16 @@ public class AdministratorOperation {
             case "A":
                 System.out.print("Please input student's number:");
                 String number = input.nextLine();
-                if (StudentBusiness.judgeStudentNumberExistApproximately(number))//重写一个模糊搜索的监测方法
-                    showStudents(StudentBusiness.getStudentByNumberApproximately(number));
+                if (StudentBusiness.studentNumberExistApproximately(number))//重写一个模糊搜索的监测方法
+                    showStudents(StudentBusiness.getStudentsByNumberApproximately(number));
                 else
                     System.out.println("This number is not existed");
                 break;
             case "B":
                 System.out.print("Please input student's name:");
                 String name = input.nextLine();
-                if (StudentBusiness.judgeStudentNameExistApproximately(name))
-                    showStudents(StudentBusiness.getStudentByNameApproximately(name));
+                if (StudentBusiness.studentNameExistApproximately(name))
+                    showStudents(StudentBusiness.getStudentsByNameApproximately(name));
                 else
                     System.out.println("This name is not existed");
                 break;
@@ -337,7 +341,7 @@ public class AdministratorOperation {
     {
         System.out.print("Please input student's number:");
         String number = input.nextLine();
-        if (!StudentBusiness.judgeStudentNumberExist(number))
+        if (!StudentBusiness.studentNumberExist(number))
         {
             System.out.println("This student number is not existed");
             return;
@@ -348,7 +352,7 @@ public class AdministratorOperation {
         do
         {
             StudentOperation.showAllCourseSelection(number);
-            StudentOperation.showCourseSelectionWithStudent(number);
+            StudentOperation.showCourseSelectionOfStudent(number);
             System.out.println("Please choose one to continue:");
             System.out.println("A) select course");
             System.out.println("B) withdraw course");
@@ -361,7 +365,7 @@ public class AdministratorOperation {
                     StudentOperation.studentSelectCourse(number);
                     break;
                 case "B":
-                    StudentOperation.studentWithdrawCourse(number);
+                    StudentOperation.studentWithdrawCourseSelection(number);
                     break;
                 case "C":
                     isContinue = false;
@@ -376,21 +380,21 @@ public class AdministratorOperation {
     {
         System.out.print("Please input course name:");
         String courseName = input.nextLine();
-        if (CourseBusiness.judgeCourseNameExist(courseName))
+        if (CourseBusiness.courseNameExist(courseName))
         {
             System.out.println("This course already exist");
             return;
         }
         System.out.print("Please input course capacity:");
         String capacity = input.nextLine();
-        if (!CourseBusiness.judgeCourseCapacityRight(capacity))
+        if (!CourseBusiness.courseCapacityRight(capacity))
         {
             System.out.println("The capacity is not right");
             return;
         }
         System.out.print("Please input majors(use \" \" to split):");
         ArrayList<String> majors = MajorBusiness.splitToMajors(input.nextLine());
-        if (!MajorBusiness.judgeMajorsExist(majors))
+        if (!MajorBusiness.majorsExist(majors))
         {
             System.out.println("There is major don't exist");
             return;
@@ -404,7 +408,7 @@ public class AdministratorOperation {
     {
         System.out.print("Please input course name:");
         String courseName = input.nextLine();
-        if (!CourseBusiness.judgeCourseNameExist(courseName))
+        if (!CourseBusiness.courseNameExist(courseName))
         {
             System.out.println("This course is not existed");
             return;
@@ -416,7 +420,7 @@ public class AdministratorOperation {
     {
         System.out.print("Please input course name:");
         String courseName = input.nextLine();
-        if (!CourseBusiness.judgeCourseNameExist(courseName))
+        if (!CourseBusiness.courseNameExist(courseName))
         {
             System.out.println("This course is not existed");
             return;
@@ -461,11 +465,11 @@ public class AdministratorOperation {
     {
         System.out.print("Please input new capacity:");
         String capacity = input.nextLine();
-        if (!CourseBusiness.judgeCourseCapacityRight(capacity))
+        if (!CourseBusiness.courseCapacityRight(capacity))
         {
             System.out.println("Your input is out of bound");
         }
-        else if (!CourseSelectionBusiness.judgeCapacityEnough(courseName , capacity))
+        else if (!CourseSelectionBusiness.capacityEnough(courseName , capacity))
         {
             System.out.println("Update Failure");
             System.out.println("Your course capacity is not enough");
@@ -484,7 +488,7 @@ public class AdministratorOperation {
         boolean isContinue = true;
         for (String major: majors)
         {
-            if (!MajorBusiness.judgeMajorExist(major))
+            if (!MajorBusiness.majorExist(major))
             {
                 System.out.println("Your input major: " + major + " is not existed!");
                 isContinue = false;
@@ -503,7 +507,7 @@ public class AdministratorOperation {
     {
         System.out.print("Please input course name:");
         String courseName = input.nextLine();
-        if (!CourseBusiness.judgeCourseNameExistApproximately(courseName))
+        if (!CourseBusiness.courseNameExistApproximately(courseName))
         {
             System.out.println("This course is not existed");
             return;
@@ -515,7 +519,7 @@ public class AdministratorOperation {
     {
         System.out.print("Please input the major:");
         String major = input.nextLine();
-        if (!MajorBusiness.judgeMajorExistApproximately(major))
+        if (!MajorBusiness.majorExistApproximately(major))
         {
             System.out.println("This major is not existed");
             return;
@@ -523,34 +527,34 @@ public class AdministratorOperation {
         showCourses(CourseCompatibilityBusiness.getCoursesOfMajorApproximately(major));
     }
 
-    private static void inquireSelectionByName()
+    private static void findSelectionByName()
     {
         System.out.print("Please input course name:");
         String courseName = input.nextLine();
-        if (!CourseBusiness.judgeCourseNameExistApproximately(courseName))
+        if (!CourseBusiness.courseNameExistApproximately(courseName))
         {
             System.out.println("This course is not existed");
             return;
         }
-        showInquiredSelectedCourseData(CourseSelectionBusiness.sortBySelectedStudent(CourseBusiness.getCourseByCourseNameApproximately(courseName)));
+        showInquiredSelectedCourseData(CourseSelectionBusiness.sortBySelectedCount(CourseBusiness.getCourseByCourseNameApproximately(courseName)));
     }
 
-    private static void inquireSelectionByMajor()
+    private static void findSelectionByMajor()
     {
         System.out.print("Please input major name:");
         String major = input.nextLine();
-        if (!MajorBusiness.judgeMajorExistApproximately(major))
+        if (!MajorBusiness.majorExistApproximately(major))
         {
             System.out.println("This major is not existed");
             return;
         }
-        showInquiredSelectedCourseData(CourseSelectionBusiness.sortBySelectedStudent(CourseCompatibilityBusiness.getCoursesOfMajorApproximately(major)));
+        showInquiredSelectedCourseData(CourseSelectionBusiness.sortBySelectedCount(CourseCompatibilityBusiness.getCoursesOfMajorApproximately(major)));
     }
 
     private static void showCourses(ArrayList<Course> courses)
     {
         System.out.printf("%-15s%-15s%-15s\n", "name", "capacity", "majors");
-        for (Course course: CourseSelectionBusiness.sortBySelectedStudent(courses))
+        for (Course course: CourseSelectionBusiness.sortBySelectedCount(courses))
         {
             System.out.printf("%-15s%-15s", course.getName(), course.getCapacity());
             for (String major: CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))
@@ -586,7 +590,7 @@ public class AdministratorOperation {
     private static void showCourseSelection(ArrayList<Course> courses)
     {
         System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "#selected", "capacity", "majors");
-        for (Course course: CourseSelectionBusiness.sortBySelectedStudent(courses))
+        for (Course course: CourseSelectionBusiness.sortBySelectedCount(courses))
         {
             System.out.printf("%-15s%-15d%-15s", course.getName(), CourseSelectionBusiness.getStudentCountsOfCourse(course.getName()), course.getCapacity());
             for (String major : CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))
