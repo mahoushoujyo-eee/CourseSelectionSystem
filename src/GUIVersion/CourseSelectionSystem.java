@@ -76,7 +76,7 @@ public class CourseSelectionSystem extends Application
         });
         btAdministratorRegister.setOnAction(event ->
         {
-            if (AdministratorBusiness.judgeAccountExist(new Administrator(administratorRegisterStage.getRegisterAccount(), administratorRegisterStage.getRegisterPassword())))
+            if (AdministratorBusiness.accountExists(new Administrator(administratorRegisterStage.getRegisterAccount(), administratorRegisterStage.getRegisterPassword())))
                 new ErrorStage("Your input account is already existed").show();
             else if (!AdministratorBusiness.judgeAccountLegal(administratorRegisterStage.getRegisterAccount()))
                 new ErrorStage("Your account is illegal").show();

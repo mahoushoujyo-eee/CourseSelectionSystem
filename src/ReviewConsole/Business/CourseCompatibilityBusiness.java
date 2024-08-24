@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class CourseCompatibilityBusiness
@@ -24,6 +25,10 @@ public class CourseCompatibilityBusiness
 
     public static void clearCourseCompatibility(String courseName)
     {
+        // Use ArrayList<CourseCompatibility> courseCompatibilitiesToRemove
+        // Get course compatibilities to delete, save into courseCompatibilitiesToRemove
+        // Remove from courseCompatibilities.
+
         ArrayList<Integer> indexes = new ArrayList<>();
 
         for (CourseCompatibility courseCompatibility: courseCompatibilities)
@@ -94,7 +99,14 @@ public class CourseCompatibilityBusiness
 
     public static ArrayList<Course> getCoursesOfMajorApproximately(String roughMajor)
     {
+        // 去重
+//        C01 Math01
+//        C01 Math02
+
+//        Math
+
         ArrayList<Course> courses = new ArrayList<>();
+        HashSet<Course> courses1 = new HashSet<>();
 
         for (Course course: CourseBusiness.courses)
         {

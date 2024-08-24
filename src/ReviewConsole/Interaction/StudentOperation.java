@@ -70,7 +70,7 @@ public class StudentOperation {
         do
         {
             showAllCourseSelection(number);
-            showCourseSelectionWithStudent(number);
+            showCourseSelectionOfStudent(number);
             System.out.println("Please choose one to continue:");
             System.out.println("A) select course");
             System.out.println("B) withdraw course");
@@ -84,7 +84,7 @@ public class StudentOperation {
                     studentSelectCourse(number);
                     break;
                 case "B":
-                    studentWithdrawCourse(number);
+                    studentWithdrawCourseSelection(number);
                     break;
                 case "C":
                     changePassword(number);
@@ -113,9 +113,11 @@ public class StudentOperation {
             return;
         }
         CourseSelectionBusiness.addCourseSelection(courseName, studentNumber);
+
+        // Add message for add success.
     }
 
-    public static void studentWithdrawCourse(String studentNumber)
+    public static void studentWithdrawCourseSelection(String studentNumber)
     {
         System.out.print("Please input the course you want to withdraw:");
         String courseName = input.nextLine();
@@ -130,6 +132,8 @@ public class StudentOperation {
             return;
         }
         CourseSelectionBusiness.removeCourseSelection(courseName, studentNumber);
+
+        // Add message for success.
     }
 
     private static void changePassword(String StudentNumber)
@@ -144,7 +148,7 @@ public class StudentOperation {
     {
         System.out.println("There are courses you can select");
         System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "selection", "capacity", "majors");
-        for (Course course: CourseCompatibilityBusiness.getCoursesOfMajor(StudentBusiness.inquireStudentByNumber(studentNumber).getMajor()))
+        for (Course course: CourseCompatibilityBusiness.getCoursesOfMajor(StudentBusiness.findStudentByNumber(studentNumber).getMajor()))
         {
             System.out.printf("%-15s%-15d%-15s", course.getName(), CourseSelectionBusiness.getStudentCountsOfCourse(course.getName()), course.getCapacity());
             for (String major : CourseCompatibilityBusiness.getMajorsOfCourse(course.getName()))
@@ -153,7 +157,7 @@ public class StudentOperation {
         }
     }
 
-    public static void showCourseSelectionWithStudent(String studentNumber)
+    public static void showCourseSelectionOfStudent(String studentNumber)
     {
         System.out.println("There are courses you have selected");
         System.out.printf("%-15s%-15s%-15s%-15s\n", "name", "selection", "capacity", "majors");

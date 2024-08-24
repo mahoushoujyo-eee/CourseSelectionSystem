@@ -75,6 +75,7 @@ public class CourseSelectionBusiness
 
     public static void removeCourseSelection(String courseName, String studentNumber)
     {
+        // Use object, instead of index.
         int index = -1;
 
         for (CourseSelection courseSelection: courseSelections)
@@ -89,7 +90,7 @@ public class CourseSelectionBusiness
             courseSelections.remove(index);
     }
 
-    public static ArrayList<Course> sortBySelectedStudent(ArrayList<Course> courses)
+    public static ArrayList<Course> sortBySelectedCount(ArrayList<Course> courses)
     {
         for (int i = 0; i < courses.size() - 1; i++)
         {

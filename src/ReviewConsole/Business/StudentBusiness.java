@@ -6,7 +6,6 @@ import ReviewConsole.Data.Student;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.rmi.StubNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -45,7 +44,7 @@ public class StudentBusiness {
         return false;
     }
 
-    public static Student inquireStudentByNumber(String number)
+    public static Student findStudentByNumber(String number)
     {
         for (Student student: students)
         {
@@ -71,6 +70,7 @@ public class StudentBusiness {
 
     public static void deleteStudent(String number)
     {
+        // Find by object.
         int index = -1;
         for (Student student: students)
         {
@@ -83,7 +83,7 @@ public class StudentBusiness {
             students.remove(index);
     }
 
-    public static void updateStudentName(String number, String name)
+    public static void updateStudentNameByStudentNumber(String number, String name)
     {
         for (Student student: students)
         {
@@ -118,7 +118,7 @@ public class StudentBusiness {
         return students;
     }
 
-    public static ArrayList<Student> getStudentByNameApproximately(String roughName)
+    public static ArrayList<Student> getStudentsByNameApproximately(String roughName)
     {
         ArrayList<Student> students = new ArrayList<>();
         for (Student student: StudentBusiness.students)
