@@ -36,9 +36,7 @@ public class CourseBusiness {
     {
         try
         {
-            if (Integer.parseInt(capacity) <= 0)
-                return false;
-            return true;
+            return Integer.parseInt(capacity) > 0;
         }catch (NumberFormatException exception)
         {
             return false;
@@ -80,6 +78,11 @@ public class CourseBusiness {
         }
         if (index != -1)
             courses.remove(index);
+    }
+
+    public static Course findCourseByName(String courseName)
+    {
+        return null;
     }
 
     public static void updateCourseCapacity(String courseName, String capacity)
